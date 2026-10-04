@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ledger – Personal Finance Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <h1 class="brand">Ledger</h1>
+        <p class="subtitle">Your money, at a glance</p>
+      </div>
+      <button class="btn btn-primary" id="openAddBtn" type="button">Add transaction</button>
+    </header>
+
+    <section class="summary" aria-label="Summary">
+      <article class="card card-balance">
+        <p class="card-label">Current balance</p>
+        <p class="card-value" id="balanceValue">₹0</p>
+      </article>
+      <article class="card">
+        <p class="card-label">Total income</p>
+        <p class="card-value value-income" id="incomeValue">₹0</p>
+      </article>
+      <article class="card">
+        <p class="card-label">Total expenses</p>
+        <p class="card-value value-expense" id="expenseValue">₹0</p>
+      </article>
+    </section>
+
+    <section class="panel" aria-label="Transactions">
+      <div class="panel-head">
+        <h2>Transactions</h2>
+        <span class="count" id="resultCount"></span>
+      </div>
+
+      <div class="filters" id="filterBar">
+        <div class="segmented" role="group" aria-label="Filter by type">
+          <button type="button" class="seg is-active" data-type="all">All</button>
+          <button type="button" class="seg" data-type="income">Income</button>
+          <button type="button" class="seg" data-type="expense">Expense</button>
+        </div>
+        <select id="categoryFilter" class="input" aria-label="Filter by category"></select>
+        <input id="searchInput" class="input" type="search" placeholder="Search transactions" aria-label="Search transactions" autocomplete="off">
+      </div>
+
+      <ul class="list" id="transactionList"></ul>
+
+      <div class="empty" id="emptyState" hidden>
+        <h3 id="emptyTitle">No transactions yet</h3>
+        <p id="emptyText">Add your first transaction to start tracking your finances.</p>
+        <button class="btn btn-primary" id="emptyAddBtn" type="button">Add transaction</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Add / Edit modal -->
+  <dialog id="formModal" class="modal" aria-labelledby="formTitle">
+    <form id="transactionForm" novalidate>
+      <div class="modal-head">
+        <h2 id="formTitle">Add transaction</h2>
+        <button type="button" class="icon-btn" id="closeFormBtn" aria-label="Close">&times;</button>
+      </div>
+
+      <div class="type-toggle" role="group" aria-label="Transaction type">
+        <input type="radio" name="type" id="typeExpense" value="expense" checked>
+        <label for="typeExpense">Expense</label>
+        <input type="radio" name="type" id="typeIncome" value="income">
+        <label for="typeIncome">Income</label>
+      </div>
+
+      <div class="field">
+        <label for="amount">Amount (₹)</label>
+        <input class="input" id="amount" name="amount" type="number" inputmode="decimal" step="0.01" min="0" placeholder="0.00">
+        <p class="error" data-error="amount"></p>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="category">Category</label>
+          <select class="input" id="category" name="category"></select>
+          <p class="error" data-error="category"></p>
+        </div>
+        <div class="field">
+          <label for="date">Date</label>
+          <input class="input" id="date" name="date" type="date">
+          <p class="error" data-error="date"></p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="description">Description</label>
+        <input class="input" id="description" name="description" type="text" maxlength="80" placeholder="e.g. Lunch with team" autocomplete="off">
+        <p class="error" data-error="description"></p>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn" id="cancelFormBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="submitBtn">Add transaction</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Delete confirmation -->
+  <dialog id="confirmModal" class="modal modal-small" aria-labelledby="confirmTitle">
+    <h2 id="confirmTitle">Delete this transaction?</h2>
+    <p class="confirm-text" id="confirmText">This can't be undone.</p>
+    <div class="modal-actions">
+      <button type="button" class="btn" id="cancelDeleteBtn">Cancel</button>
+      <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
