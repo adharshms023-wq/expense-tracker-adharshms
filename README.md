@@ -6,7 +6,7 @@ Ledger helps you keep track of your **income, expenses, and current balance** in
 
 ## 🚀 Live Demo
 
-👉 **Live Demo:** Add your deployed website link here
+👉 **Live Demo:** https://adharshms023-wq.github.io/expense-tracker-adharshms/
 
 👉 **GitHub Repository:**  
 https://github.com/adharshms023-wq/expense-tracker-adharshms
